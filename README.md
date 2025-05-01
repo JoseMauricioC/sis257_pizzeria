@@ -10,7 +10,7 @@ Además, se realiza un seguimiento riguroso del inventario de ingredientes, incl
 Gracias a esta automatización, la pizzería mejora su atención al cliente, optimiza sus procesos internos y mantiene un control preciso de sus operaciones diarias.
 
 # Entidades 
-Usuarios (id, nombre, apellido, correo, contraseña, rol)         
+Usuarios (id, usuario, clave, email, rol)         
 Clientes (id, nombre, apellido, telefono, direccion)              
 Productos (id, imagen, nombre, descripcion, precio, stock)            
 Ventas (id, fecha, total, id_usuario, id_cliente)            
