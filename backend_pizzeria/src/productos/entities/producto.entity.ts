@@ -1,8 +1,11 @@
+import { DetalleVenta } from 'src/detalle_venta/entities/detalle_venta.entity';
+import { ProductosIngrediente } from 'src/productos_ingredientes/entities/productos_ingrediente.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -35,4 +38,13 @@ export class Producto {
 
   @DeleteDateColumn({ name: 'fecha_eliminacion', select: false })
   fechaEliminacion: Date;
+
+  @OneToMany(
+    () => ProductosIngrediente,
+    (productoingrediente) => productoingrediente.producto,
+  )
+  productoIngredientes: ProductosIngrediente[];
+
+  @OneToMany(() => DetalleVenta, (detalleventa) => detalleventa.producto)
+  detalleVenta: DetalleVenta[];
 }

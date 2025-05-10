@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProveedorDto } from './dto/create-proveedor.dto';
 import { UpdateProveedorDto } from './dto/update-proveedor.dto';
 import { Proveedor } from './entities/proveedor.entity';
@@ -14,25 +18,24 @@ export class ProveedoresService {
   ) {}
 
   async create(CreateProveedorDto: CreateProveedorDto): Promise<Proveedor> {
-      const existe = await this.proveedoresRepository.findOneBy({
-       nombre : CreateProveedorDto.nombre.trim(),
-       telefono : CreateProveedorDto.telefono.trim(),
-       correo : CreateProveedorDto.correo.trim(),
-       direccion : CreateProveedorDto.direccion.trim(),
-      });
-      if (existe) throw new ConflictException('El proveedor ya existe');
-  
-      const proveedor = new Proveedor();
-      proveedor.nombre = CreateProveedorDto.nombre.trim();
-      proveedor.telefono = CreateProveedorDto.telefono.trim();
-      proveedor.correo = CreateProveedorDto.correo.trim();
-      proveedor.direccion = CreateProveedorDto.direccion.trim();
+    const existe = await this.proveedoresRepository.findOneBy({
+      nombre: CreateProveedorDto.nombre.trim(),
+      telefono: CreateProveedorDto.telefono.trim(),
+      correo: CreateProveedorDto.correo.trim(),
+      direccion: CreateProveedorDto.direccion.trim(),
+    });
+    if (existe) throw new ConflictException('El proveedor ya existe');
 
-      return this.proveedoresRepository.save(proveedor);
-    }
-  
+    const proveedor = new Proveedor();
+    proveedor.nombre = CreateProveedorDto.nombre.trim();
+    proveedor.telefono = CreateProveedorDto.telefono.trim();
+    proveedor.correo = CreateProveedorDto.correo.trim();
+    proveedor.direccion = CreateProveedorDto.direccion.trim();
 
-  async findAll() : Promise<Proveedor[]>  {
+    return this.proveedoresRepository.save(proveedor);
+  }
+
+  async findAll(): Promise<Proveedor[]> {
     return this.proveedoresRepository.find();
   }
 
@@ -53,6 +56,5 @@ export class ProveedoresService {
   async remove(id: number) {
     const genero = await this.findOne(id);
     return this.generosRepository.softRemove(genero);
-  }
-
+  }
 }

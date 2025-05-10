@@ -1,8 +1,10 @@
+import { ProveedoresIngrediente } from 'src/proveedores_ingredientes/entities/proveedores_ingrediente.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,4 +34,10 @@ export class Proveedor {
 
   @DeleteDateColumn({ name: 'fecha_eliminacion', select: false })
   fechaEliminacion: Date;
+
+  @OneToMany(
+    () => ProveedoresIngrediente,
+    (proveedoresingredientes) => proveedoresingredientes.proveedor,
+  )
+  proveedoresIngredientes: ProveedoresIngrediente[];
 }

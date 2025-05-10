@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { InjectRepository } from '@nestjs/typeorm/dist';
@@ -28,7 +32,7 @@ export class ClientesService {
     cliente.direccion = createClienteDto.direccion.trim();
     return this.clientesRepository.save(cliente);
   }
-  
+
   async findAll(): Promise<Cliente[]> {
     return this.clientesRepository.find();
   }
