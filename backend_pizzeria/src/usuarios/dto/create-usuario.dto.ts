@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsBooleanString,
+  IsBoolean,
   IsDefined,
   IsNotEmpty,
   IsString,
@@ -29,4 +29,9 @@ export class CreateUsuarioDto {
   @IsString({ message: 'El campo rol debe ser de tipo cadena' })
   @MaxLength(15, { message: 'El campo rol no debe ser mayor a 15 caracteres' })
   readonly rol: string;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El campo premium debe estar definido' })
+  @IsBoolean({ message: 'El campo premium debe ser de tipo verdadero' })
+  readonly premium: boolean;
 }

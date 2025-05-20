@@ -26,6 +26,9 @@ export class Usuario {
   @Column('varchar', { length: 15 })
   rol: string;
 
+  @Column('boolean')
+  premium: boolean;
+
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
