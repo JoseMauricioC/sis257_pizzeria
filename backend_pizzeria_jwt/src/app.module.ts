@@ -12,6 +12,7 @@ import { VentasModule } from './ventas/ventas.module';
 import { DetalleVentaModule } from './detalle_venta/detalle_venta.module';
 import { ProductosIngredientesModule } from './productos_ingredientes/productos_ingredientes.module';
 import { ProveedoresIngredientesModule } from './proveedores_ingredientes/proveedores_ingredientes.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ProveedoresIngredientesModule } from './proveedores_ingredientes/provee
     DetalleVentaModule,
     ProductosIngredientesModule,
     ProveedoresIngredientesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

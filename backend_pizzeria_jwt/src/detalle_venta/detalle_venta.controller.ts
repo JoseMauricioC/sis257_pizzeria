@@ -6,11 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { DetalleVentaService } from './detalle_venta.service';
 import { CreateDetalleVentaDto } from './dto/create-detalle_venta.dto';
 import { UpdateDetalleVentaDto } from './dto/update-detalle_venta.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @Controller('detalle-venta')
 export class DetalleVentaController {
   constructor(private readonly detalleVentaService: DetalleVentaService) {}
