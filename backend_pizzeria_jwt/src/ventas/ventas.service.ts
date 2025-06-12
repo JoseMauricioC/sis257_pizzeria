@@ -30,7 +30,7 @@ export class VentasService {
         usuario: { id: true, usuario: true, rol: true },
         cliente: { id: true, nombre: true, apellido: true, telefono: true },
       },
-      order: { cliente: { nombre: 'ASC' }, fecha: 'DESC' },
+      //order: { cliente: { nombre: 'ASC' }, fecha: 'DESC' },
     });
   }
 

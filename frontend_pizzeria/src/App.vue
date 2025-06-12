@@ -17,6 +17,7 @@ const authStore = useAuthStore();
 	<span v-else>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/ventas">Ventas</RouterLink>
         <RouterLink to="/producto">Productos</RouterLink>
         <RouterLink to="/cliente">Clientes</RouterLink>
 	  <a @click="authStore.logout()" class="text-danger">Salir</a>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { useAuthStore } from '@/stores';
-import { getTokenFromLocalStorage } from '@/helpers';
+import { useAuthStore } from '@/stores'
+import { getTokenFromLocalStorage } from '@/helpers'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,11 +20,16 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
+      path: '/ventas',
+      name: 'ventas',
+      component: () => import('../views/VentaView.vue'),
+    },
+    {
       path: '/producto',
       name: 'producto',
       component: () => import('../views/ProductoView.vue'),
     },
-     {
+    {
       path: '/cliente',
       name: 'cliente',
       component: () => import('../views/ClienteView.vue'),
@@ -32,20 +37,20 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
-    }
+      component: () => import('../views/LoginView.vue'),
+    },
   ],
 })
 
 export default router
-router.beforeEach(async to => {
-  const publicPages = ["/login"];
-  const authRequired = !publicPages.includes(to.path);
-  const authStore = useAuthStore();
+router.beforeEach(async (to) => {
+  const publicPages = ['/login']
+  const authRequired = !publicPages.includes(to.path)
+  const authStore = useAuthStore()
 
   if (authRequired && !getTokenFromLocalStorage()) {
-    if (authStore) authStore.logout();
-    authStore.returnUrl = to.fullPath;
-    return "/login";
+    if (authStore) authStore.logout()
+    authStore.returnUrl = to.fullPath
+    return '/login'
   }
-});
+})
