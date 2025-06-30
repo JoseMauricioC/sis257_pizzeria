@@ -28,7 +28,7 @@ onMounted(cargarVentas)
 </script>
 
 <template>
-  <div class="p-5">
+  <div class="m-8">
     <div>
       <h1>Ventas</h1>
       <Button label="Registrar Nueva Venta" icon="pi pi-plus" @click="abrirFormulario" />

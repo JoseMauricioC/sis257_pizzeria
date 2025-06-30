@@ -43,7 +43,7 @@ defineExpose({ obtenerLista })
 </script>
 
 <template>
-  <div>
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <div class="col-7 pl-0 mt-3">
       <InputGroup>
         <InputGroupAddon><i class="pi pi-search"></i></InputGroupAddon>

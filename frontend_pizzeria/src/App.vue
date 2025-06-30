@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import { useAuthStore } from "@/stores/index";
-const authStore = useAuthStore();
+import { RouterView } from 'vue-router'
+import '@/assets/js/jquery.min.js'
+import '@/assets/js/bootstrap.min.js'
+import '@/assets/js/jquery.sticky.js'
+import '@/assets/js/click-scroll.js'
+import '@/assets/js/custom.js'
+import MainHeader from './components/MainHeader.vue'
+import MainFooter from './components/MainFooter.vue'
+//import { RouterLink, RouterView } from 'vue-router'
+// import HelloWorld from './components/HelloWorld.vue'
+// import { useAuthStore } from "@/stores/index";
+// const authStore = useAuthStore();
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <main>
+    <MainHeader/>
+    <RouterView />
+  </main>
+    <MainFooter/>
+  <!-- <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> 
 
     <div class="wrapper">
        <HelloWorld :msg="'SIS257' + (authStore.user ? ' - Hola ' + authStore.user : '')" />
@@ -24,13 +37,15 @@ const authStore = useAuthStore();
 	</span>
   </nav>
     </div>
-  </header>
+  </header> -->
 
-  <RouterView />
 </template>
 
-<style scoped>
-header {
+<style>
+@import '@/assets/css/bootstrap.min.css';
+@import '@/assets/css/bootstrap-icons.css';
+@import '@/assets/css/templatemo-festava-live.css';
+/*header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -90,5 +105,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+}*/
 </style>

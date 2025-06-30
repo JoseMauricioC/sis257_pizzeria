@@ -36,7 +36,7 @@ function handleCloseDialog() {
 </script>
 
 <template>
-  <div>
+  <div class="m-8">
     <h1>Productos</h1>
     <Button label="Crear Producto" icon="pi pi-plus" @click="handleCreate" />
     <ProductoList ref="productoListRef" @edit="handleEdit" />
@@ -50,4 +50,5 @@ function handleCloseDialog() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
