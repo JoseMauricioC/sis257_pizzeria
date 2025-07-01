@@ -31,8 +31,10 @@ const agregarProducto = () => {
     return
   }
 
-  const yaExiste = detalle.value.find((item) => item.producto.id === productoSeleccionado.value.id)
-
+  //const yaExiste = detalle.value.find((item) => item.producto.id === productoSeleccionado.value.id)
+  const yaExiste = productoSeleccionado.value
+    ? detalle.value.find((item) => item.producto.id === productoSeleccionado.value!.id)
+    : null
   if (yaExiste) {
     alert('Este producto ya fue agregado')
     return
@@ -74,7 +76,7 @@ function limpiarFormulario() {
   productoSeleccionado.value = null
   cantidad.value = 1
   detalle.value = []
-  total.value = 0
+  //total.value = 0
 }
 
 const dialogVisible = computed({
@@ -84,6 +86,39 @@ const dialogVisible = computed({
   },
 })
 
+// async function registrarVenta() {
+//   if (!idUsuario.value || !idCliente.value || detalle.value.length === 0) {
+//     alert('Debe completar todos los campos y agregar al menos un producto')
+//     return
+//   }
+
+//   const venta = {
+//     idUsuario: idUsuario.value,
+//     idCliente: idCliente.value,
+//     //fecha: new Date(),
+//     fecha: new Date().toLocaleDateString(),
+//     total: total.value,
+//     detalleVenta: detalle.value.map((d) => ({
+//       idProducto: d.producto.id,
+//       cantidad: d.cantidad,
+//       precioUnitario: d.precioUnitario,
+//       subtotal: d.subtotal,
+//     })),
+//   }
+
+//   console.log('Datos a enviar:', venta)
+
+//   try {
+//     await http.post('/ventas', venta)
+//     //const respuesta = await http.post('/ventas', venta)
+//     //console.log('Respuesta del servidor:', respuesta)
+//     emit('ventaGuardada')
+//     emit('close')
+//     limpiarFormulario()
+//   } catch (error) {
+//     console.error('Error al registrar venta:', error)
+//     alert('Ocurrió un error al registrar la venta')
+//   }
 async function registrarVenta() {
   if (!idUsuario.value || !idCliente.value || detalle.value.length === 0) {
     alert('Debe completar todos los campos y agregar al menos un producto')
@@ -103,15 +138,18 @@ async function registrarVenta() {
     })),
   }
 
+  console.log('Datos a enviar:', venta) // Agrega esto
+
   try {
-    await http.post('/ventas', venta)
-    //const respuesta = await http.post('/ventas', venta)
-    //console.log('Respuesta del servidor:', respuesta)
+    const respuesta = await http.post('/ventas', venta)
+    console.log('Respuesta exitosa:', respuesta) // Agrega esto
     emit('ventaGuardada')
     emit('close')
     limpiarFormulario()
   } catch (error) {
-    console.error('Error al registrar venta:', error)
+    console.error('Error completo:', error) // Ya lo tienes
+    //console.error('Respuesta del servidor:', error.response?.data) // Agrega esto
+    //console.error('Status:', error.response?.status) // Agrega esto
     alert('Ocurrió un error al registrar la venta')
   }
 }

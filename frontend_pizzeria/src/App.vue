@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import '@/assets/js/jquery.min.js'
-import '@/assets/js/bootstrap.min.js'
+//import '@/assets/js/bootstrap.min.js'
 import '@/assets/js/jquery.sticky.js'
 import '@/assets/js/click-scroll.js'
 import '@/assets/js/custom.js'

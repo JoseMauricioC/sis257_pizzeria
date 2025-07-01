@@ -1,72 +1,65 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateDetalleVentaDto } from './dto/create-detalle_venta.dto';
-import { UpdateDetalleVentaDto } from './dto/update-detalle_venta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetalleVenta } from './entities/detalle_venta.entity';
+import { CreateDetalleVentaDto } from './dto/create-detalle_venta.dto';
+import { UpdateDetalleVentaDto } from './dto/update-detalle_venta.dto';
+import { Producto } from 'src/productos/entities/producto.entity';
+import { Venta } from 'src/ventas/entities/venta.entity';
 
 @Injectable()
 export class DetalleVentaService {
   constructor(
     @InjectRepository(DetalleVenta)
-    private detalleventasRepository: Repository<DetalleVenta>,
+    private detalleVentaRepository: Repository<DetalleVenta>,
   ) {}
+
   async create(
     createDetalleVentaDto: CreateDetalleVentaDto,
   ): Promise<DetalleVenta> {
-    const detalle_venta = new DetalleVenta();
-    detalle_venta.cantidad = createDetalleVentaDto.cantidad;
-    detalle_venta.precioUnitario = createDetalleVentaDto.precioUnitario;
-    detalle_venta.subtotal = createDetalleVentaDto.subtotal;
-    detalle_venta.idVenta = createDetalleVentaDto.idVenta;
-    detalle_venta.idProducto = createDetalleVentaDto.idProducto;
+    const detalleVenta = this.detalleVentaRepository.create({
+      venta: { id: createDetalleVentaDto.idVenta } as Venta,
+      producto: { id: createDetalleVentaDto.idProducto } as Producto,
+      cantidad: createDetalleVentaDto.cantidad,
+      precioUnitario: createDetalleVentaDto.precioUnitario,
+      subtotal: createDetalleVentaDto.subtotal,
+    });
 
-    return this.detalleventasRepository.save(detalle_venta);
+    return await this.detalleVentaRepository.save(detalleVenta);
   }
 
   async findAll(): Promise<DetalleVenta[]> {
-    return this.detalleventasRepository.find({
-      relations: { producto: true, venta: { usuario: true, cliente: true } },
-      select: {
-        id: true,
-        cantidad: true,
-        precioUnitario: true,
-        subtotal: true,
-        producto: { id: true, imagen: true, nombre: true, precio: true },
-        venta: {
-          id: true,
-          fecha: true,
-          total: true,
-          usuario: { usuario: true, rol: true },
-          cliente: { nombre: true, apellido: true, telefono: true },
-        },
-      },
-      order: { venta: { fecha: 'DESC', cliente: { nombre: 'ASC' } } },
+    return this.detalleVentaRepository.find({
+      relations: ['venta', 'producto'],
     });
   }
 
   async findOne(id: number): Promise<DetalleVenta> {
-    const detalleventa = await this.detalleventasRepository.findOne({
+    const detalle = await this.detalleVentaRepository.findOne({
       where: { id },
-      relations: { venta: true, producto: true },
+      relations: ['venta', 'producto'],
     });
 
-    if (!detalleventa) throw new NotFoundException('el detalle no existe');
+    if (!detalle) {
+      throw new NotFoundException(
+        `Detalle de venta con id ${id} no encontrado`,
+      );
+    }
 
-    return detalleventa;
+    return detalle;
   }
 
   async update(
     id: number,
-    updateDetalleVentaDto: UpdateDetalleVentaDto,
+    updateDto: UpdateDetalleVentaDto,
   ): Promise<DetalleVenta> {
-    const detalleVenta = await this.findOne(id);
-    Object.assign(detalleVenta, updateDetalleVentaDto);
-    return this.detalleventasRepository.save(detalleVenta);
+    const detalle = await this.findOne(id);
+    Object.assign(detalle, updateDto);
+    return this.detalleVentaRepository.save(detalle);
   }
 
-  async remove(id: number) {
-    const detalleVenta = await this.findOne(id);
-    return this.detalleventasRepository.softRemove(detalleVenta);
+  async remove(id: number): Promise<void> {
+    const detalle = await this.findOne(id);
+    await this.detalleVentaRepository.remove(detalle);
   }
 }

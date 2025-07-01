@@ -68,3 +68,5 @@ onMounted(cargarVentas)
     />
   </div>
 </template>
+
+

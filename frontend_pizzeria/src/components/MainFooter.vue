@@ -153,7 +153,8 @@
         <div class="row">
           <div class="col-lg-6 col-12">
             <h2 class="text-white mb-lg-0">
-              <i class="pi pi-circle pizza-icon"></i>
+              <!-- <i class="pi pi-circle pizza-icon"></i> -->
+              <span class="pizza-icon" role="img" aria-label="Pizza icon">🍕</span>
               Fusion de Sabores
             </h2>
             <p class="brand-slogan">¡La mejor pizza de la ciudad desde 2005!</p>

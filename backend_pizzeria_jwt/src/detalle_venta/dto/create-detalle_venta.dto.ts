@@ -1,41 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsDefined,
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  Min,
-} from 'class-validator';
-import { Producto } from 'src/productos/entities/producto.entity';
-import { Venta } from 'src/ventas/entities/venta.entity';
+import { IsInt, IsNumber, IsPositive, Min } from 'class-validator';
 
 export class CreateDetalleVentaDto {
   @ApiProperty()
-  @IsNotEmpty({ message: 'La cantidad es obligatoria.' })
-  @IsNumber({}, { message: 'La cantidad debe ser un número.' })
-  @IsPositive({ message: 'La cantidad debe ser mayor que cero.' })
+  @IsInt({ message: 'El id de la venta debe ser un número entero' })
+  readonly idVenta: number;
+
+  @ApiProperty()
+  @IsInt({ message: 'El id del producto debe ser un número entero' })
+  readonly idProducto: number;
+
+  @ApiProperty()
+  @IsInt({ message: 'La cantidad debe ser un número entero' })
+  @Min(1, { message: 'La cantidad debe ser al menos 1' })
   readonly cantidad: number;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El precio unitario es obligatorio.' })
-  @IsNumber({}, { message: 'El precio unitario debe ser un número.' })
-  @IsPositive({ message: 'El precio unitario debe ser mayor que cero.' })
+  @IsNumber({}, { message: 'El precio unitario debe ser un número' })
+  @IsPositive({ message: 'El precio unitario debe ser positivo' })
   readonly precioUnitario: number;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El subtotal es obligatorio.' })
-  @IsNumber({}, { message: 'El subtotal debe ser un número.' })
-  @Min(0.01, { message: 'El subtotal debe ser mayor que cero.' })
+  @IsNumber({}, { message: 'El subtotal debe ser un número' })
+  @IsPositive({ message: 'El subtotal debe ser positivo' })
   readonly subtotal: number;
-
-  @ApiProperty()
-  @IsDefined({ message: 'El campo idVenta debe estar definido' })
-  @IsInt({ message: 'El campo idVenta debe ser de tipo numérico' })
-  readonly idVenta: Venta['id'];
-
-  @ApiProperty()
-  @IsDefined({ message: 'El campo idProducto debe estar definido' })
-  @IsInt({ message: 'El campo idProducto debe ser de tipo numérico' })
-  readonly idProducto: Producto['id'];
 }

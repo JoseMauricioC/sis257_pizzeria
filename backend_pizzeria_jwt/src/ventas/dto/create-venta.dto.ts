@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
   IsDateString,
   IsDefined,
   IsInt,
   IsNotEmpty,
   IsNumber,
   Min,
+  ValidateNested,
 } from 'class-validator';
-import { Cliente } from 'src/clientes/entities/cliente.entity';
-import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { Type } from 'class-transformer';
 
 export class CreateVentaDto {
   @ApiProperty()
@@ -17,18 +18,42 @@ export class CreateVentaDto {
   readonly fecha: Date;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El total es obligatorio.' })
-  @IsNumber({}, { message: 'El total debe ser un número.' })
-  @Min(0.01, { message: 'El total debe ser mayor que cero.' })
+  @IsNumber()
+  @Min(0)
   readonly total: number;
 
   @ApiProperty()
-  @IsDefined({ message: 'El campo idUsuario debe estar definido' })
-  @IsInt({ message: 'El campo idUsuario debe ser de tipo numérico' })
-  readonly idUsuario: Usuario['id'];
+  @IsInt()
+  readonly idUsuario: number;
 
   @ApiProperty()
-  @IsDefined({ message: 'El campo idUsuario debe estar definido' })
-  @IsInt({ message: 'El campo idUsuario debe ser de tipo numérico' })
-  readonly idCliente: Cliente['id'];
+  @IsInt()
+  readonly idCliente: number;
+}
+
+class DetalleVentaDto {
+  @ApiProperty()
+  @IsInt()
+  readonly idProducto: number;
+
+  @ApiProperty()
+  @IsInt()
+  @Min(1)
+  readonly cantidad: number;
+
+  @ApiProperty()
+  @IsNumber()
+  readonly precioUnitario: number;
+
+  @ApiProperty()
+  @IsNumber()
+  readonly subtotal: number;
+}
+
+export class CreateVentaConDetallesDto extends CreateVentaDto {
+  @ApiProperty({ type: [DetalleVentaDto] })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => DetalleVentaDto)
+  detalleVenta: DetalleVentaDto[];
 }
