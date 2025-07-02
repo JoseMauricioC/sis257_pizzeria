@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <nav></nav>
   <section
     class="home-slider owl-carousel img"
     style="background-image: url('@/assets/images/bg_1.jpg')"

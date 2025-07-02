@@ -1,72 +1,53 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Button from 'primevue/button'
 import http from '@/plugins/axios'
-import VentaForm from '@/components/venta/VentaForm.vue'
 
-const ventas = ref([])
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+
+import VentaForm from '@/components/venta/VentaForm.vue'
+import type { Venta } from '@/models/venta'
+
+const ventas = ref<Venta[]>([])
 const mostrarFormulario = ref(false)
 
-function abrirFormulario() {
-  mostrarFormulario.value = true
-}
-
-function cerrarFormulario() {
-  mostrarFormulario.value = false
-}
-
 async function cargarVentas() {
-  ventas.value = await http.get('/ventas').then((res) => res.data)
-}
-
-function cuandoSeRegistraVenta() {
-  cerrarFormulario()
-  cargarVentas()
+  try {
+    const response = await http.get('/ventas')
+    ventas.value = response.data
+  } catch (error) {
+    console.error('Error al cargar ventas:', error)
+  }
 }
 
 onMounted(cargarVentas)
 </script>
-
 <template>
-  <div class="m-8">
-    <div>
-      <h1>Ventas</h1>
-      <Button label="Registrar Nueva Venta" icon="pi pi-plus" @click="abrirFormulario" />
-    </div>
+  <div class="m-6">
+    <h1>Listado de Ventas</h1>
 
-    <table style="border-collapse: collapse; text-align: center" border="1">
-      <thead>
-        <tr>
-          <th>Nro.</th>
-          <th>Usuario</th>
-          <th>Cliente</th>
-          <th>Fecha</th>
-          <th>Total</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(venta, index) in ventas" :key="venta.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ venta.usuario.usuario }}</td>
-          <td>{{ venta.cliente.nombre + ' ' + venta.cliente.apellido }}</td>
-          <td>{{ venta.fecha }}</td>
-          <td>{{ venta.total }}</td>
-          <td>
-            <Button label="Detalles" text severity="info" />
-            <Button label="Reporte" text severity="danger" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <Button
+      label="Registrar nueva venta"
+      icon="pi pi-plus"
+      @click="mostrarFormulario = true"
+      class="mb-4"
+    />
 
-    <!-- Formulario como diálogo -->
+    <!-- Mostrar formulario -->
     <VentaForm
       :mostrar="mostrarFormulario"
-      @close="cerrarFormulario"
-      @ventaGuardada="cuandoSeRegistraVenta"
+      @cerrar="mostrarFormulario = false"
+      @venta-registrada="cargarVentas"
     />
+
+    <!-- Tabla de ventas -->
+    <DataTable :value="ventas" v-if="ventas.length">
+      <Column field="id" header="ID" />
+      <Column field="fecha" header="Fecha" />
+      <Column field="total" header="Total Bs." />
+      <Column field="cliente.nombre" header="Cliente" />
+      <Column field="usuario.usuario" header="Usuario" />
+    </DataTable>
   </div>
 </template>
-
-

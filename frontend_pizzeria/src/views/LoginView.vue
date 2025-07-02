@@ -1,74 +1,3 @@
-<!-- <script setup lang="ts">
-import { ref } from 'vue'
-import { useAuthStore } from '@/stores/index'
-
-const usuario = ref('')
-const clave = ref('')
-const error = ref(false)
-
-function onSubmit() {
-  const authStore = useAuthStore()
-  authStore.login(usuario.value, clave.value).catch(() => (error.value = true))
-}
-</script>
-
-<template>
-  <div class="my-5 pt-5">
-    <h1 class="text-center">Iniciar Sesión</h1>
-    <form class="form" @submit.prevent="onSubmit">
-      <label class="form-label">Usuario:</label>
-      <input v-model="usuario" type="text" class="form-input" placeholder="Usuario" autofocus />
-
-      <label class="form-label">Contraseña:</label>
-      <input v-model="clave" type="password" class="form-input" placeholder="Contraseña" />
-
-      <p v-if="error" class="text-danger">Usuario y/o contraseña incorrectos</p>
-      <input type="submit" class="form-submit" value="Ingresar" />
-    </form>
-  </div>
-</template>
-
-<style>
-.form {
-  margin: 1.5rem auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 20%;
-  min-width: 350px;
-  max-width: 100%;
-  background: rgba(19, 35, 47, 0.9);
-  border-radius: 5px;
-  padding: 40px;
-  box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
-}
-
-.form-label {
-  margin-top: 2rem;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-.form-input {
-  padding: 10px 15px;
-  background: none;
-  background-image: none;
-  border: 1px solid white;
-  color: white;
-}
-
-.form-submit {
-  background: #ee5007;
-  border: none;
-  border-radius: 5rem;
-  color: white;
-  margin-top: 3rem;
-  padding: 1rem 0;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-</style> -->
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/index'
@@ -87,8 +16,9 @@ function onSubmit() {
   const authStore = useAuthStore()
   loading.value = true
   error.value = false
-  
-  authStore.login(usuario.value, clave.value)
+
+  authStore
+    .login(usuario.value, clave.value)
     .catch(() => {
       error.value = true
     })
@@ -98,9 +28,7 @@ function onSubmit() {
 }
 
 function handleImageError(event: Event) {
-  // Si la imagen no se encuentra, mostrar una imagen de placeholder
   const target = event.target as HTMLImageElement
-  //target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZjQ1MDAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjYzNDciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2EpIi8+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMjAwIiByPSIxMDAiIGZpbGw9IiNmZmZmMDAiIG9wYWNpdHk9IjAuOCIvPjxjaXJjbGUgY3g9IjIwMCIgY3k9IjM1MCIgcj0iMjAiIGZpbGw9IiNmZmZmZmYiLz48Y2lyY2xlIGN4PSI0MDAiIGN5PSIzMDAiIHI9IjE1IiBmaWxsPSIjZmZmZmZmIi8+PGNpcmNsZSBjeD0iMzUwIiBjeT0iNDAwIiByPSIyNSIgZmlsbD0iI2ZmZmZmZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIj5QaXp6ZXLDrWEgRnVzacOzbiBkZSBTYWJvcmVzPC90ZXh0Pjwvc3ZnPg=='
   target.src = 'data:@/assets/images/bg_1.jpg'
 }
 </script>
@@ -114,12 +42,12 @@ function handleImageError(event: Event) {
         <Card class="login-card">
           <template #header>
             <div class="pizza-header">
-              <i class="pi pi-heart-fill pizza-icon"></i>
+              <h1 class="login-title">Pizzeria</h1>
               <h1 class="login-title">Fusión de Sabores</h1>
-              <p class="login-subtitle">Auténtica Pizza Italiana</p>
+              <p class="login-subtitle" style="color: white;">Auténtica Pizza</p>
             </div>
           </template>
-          
+
           <template #content>
             <form @submit.prevent="onSubmit" class="login-form">
               <div class="field">
@@ -173,7 +101,6 @@ function handleImageError(event: Event) {
           <template #footer>
             <div class="login-footer">
               <i class="pi pi-shield-check"></i>
-              <span>Sistema seguro de gestión</span>
             </div>
           </template>
         </Card>
@@ -183,9 +110,9 @@ function handleImageError(event: Event) {
       <div class="image-section">
         <div class="image-container">
           <!-- Aquí va tu imagen desde el ordenador -->
-          <img 
-            src="@/assets/images/pizza-20.jpg" 
-            alt="Deliciosa Pizza Italiana" 
+          <img
+            src="@/assets/images/pizza-20.jpg"
+            alt="Deliciosa Pizza Italiana"
             class="hero-image"
             @error="handleImageError"
           />
@@ -253,7 +180,7 @@ function handleImageError(event: Event) {
   background: rgba(30, 30, 30, 0.98);
   border: 1px solid rgba(255, 69, 0, 0.3);
   border-radius: 20px;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 69, 0, 0.1);
 }
@@ -289,11 +216,7 @@ function handleImageError(event: Event) {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(
-    transparent,
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0.9)
-  );
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
   padding: 3rem 2rem 2rem;
   color: white;
   text-align: center;
@@ -448,16 +371,16 @@ function handleImageError(event: Event) {
     height: auto;
     min-height: 100vh;
   }
-  
+
   .login-section {
     order: 2;
   }
-  
+
   .image-section {
     order: 1;
     min-height: 300px;
   }
-  
+
   .image-title {
     font-size: 2rem;
   }
@@ -467,28 +390,28 @@ function handleImageError(event: Event) {
   .login-container {
     padding: 0.5rem;
   }
-  
+
   .login-content {
     max-width: 100%;
     border-radius: 15px;
   }
-  
+
   .login-card {
     max-width: 100%;
   }
-  
+
   .login-title {
     font-size: 1.8rem;
   }
-  
+
   .pizza-icon {
     font-size: 2.5rem;
   }
-  
+
   .image-title {
     font-size: 1.5rem;
   }
-  
+
   .image-subtitle {
     font-size: 1rem;
   }

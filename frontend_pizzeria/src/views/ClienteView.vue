@@ -27,7 +27,7 @@ function handleCloseDialog() {
 </script>
 
 <template>
-    <div class="m-8">
+    <div class="m-6">
         <h1>Clientes</h1>
         <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
         <ClienteList ref="clienteListRef" @edit="handleEdit" />

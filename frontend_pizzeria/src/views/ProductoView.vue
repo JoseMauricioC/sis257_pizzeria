@@ -13,11 +13,6 @@ function handleCreate() {
   mostrarDialog.value = true
 }
 
-// function handleEdit(producto: any) {
-//   productoEdit.value = producto
-//   mostrarDialog.value = true
-// }
-
 function handleEdit(producto: any) {
   productoEdit.value = {
     ...producto,
@@ -36,7 +31,7 @@ function handleCloseDialog() {
 </script>
 
 <template>
-  <div class="m-8">
+  <div class="m-6">
     <h1>Productos</h1>
     <Button label="Crear Producto" icon="pi pi-plus" @click="handleCreate" />
     <ProductoList ref="productoListRef" @edit="handleEdit" />
