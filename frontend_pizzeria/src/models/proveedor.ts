@@ -1,7 +1,7 @@
-export interface Cliente {
+export interface Proveedor {
   id: number
   nombre: string
-  apellido: string
   telefono: string
+  correo: string
   direccion: string
 }

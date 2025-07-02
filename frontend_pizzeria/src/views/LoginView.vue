@@ -44,7 +44,7 @@ function handleImageError(event: Event) {
             <div class="pizza-header">
               <h1 class="login-title">Pizzeria</h1>
               <h1 class="login-title">Fusión de Sabores</h1>
-              <p class="login-subtitle" style="color: white;">Auténtica Pizza</p>
+              <p class="login-subtitle" style="color: white">Auténtica Pizza</p>
             </div>
           </template>
 

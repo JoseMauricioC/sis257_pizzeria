@@ -42,4 +42,3 @@ export class AuthService {
     return usuario;
   }
 }
-

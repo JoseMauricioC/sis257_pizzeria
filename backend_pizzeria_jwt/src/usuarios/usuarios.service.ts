@@ -66,7 +66,7 @@ export class UsuariosService {
       throw new UnauthorizedException('Clave incorrecta');
     }
 
-    usuarioOk.clave= '';
+    usuarioOk.clave = '';
     return usuarioOk;
   }
 }
