@@ -76,24 +76,6 @@ onMounted(cargarVentas)
         stripedRows
         responsiveLayout="scroll"
       >
-        <Column header="Acciones">
-          <template #body="slotProps">
-            <Button
-              icon="pi pi-eye"
-              label="Detalle"
-              class="btn-detalle"
-              @click="
-                () => {
-                  ventaSeleccionada = slotProps.data as Venta
-                  mostrarDetalle = true
-                }
-              "
-              severity="info"
-              rounded
-            />
-          </template>
-        </Column>
-
         <Column field="id" header="ID" class="columna-id">
           <template #body="slotProps">
             <div class="id-badge">#{{ slotProps.data.id }}</div>
@@ -132,6 +114,24 @@ onMounted(cargarVentas)
             </div>
           </template>
         </Column>
+
+        <Column header="Acciones">
+          <template #body="slotProps">
+            <Button
+              icon="pi pi-eye"
+              label="Detalle"
+              class="btn-detalle"
+              @click="
+                () => {
+                  ventaSeleccionada = slotProps.data as Venta
+                  mostrarDetalle = true
+                }
+              "
+              severity="info"
+              rounded
+            />
+          </template>
+        </Column>
       </DataTable>
     </div>
 
@@ -152,10 +152,10 @@ onMounted(cargarVentas)
   </div>
 
   <DetalleVentaDialog
-  :mostrar="mostrarDetalle"
-  :venta="ventaSeleccionada"
-  @close="mostrarDetalle = false"
-/>
+    :mostrar="mostrarDetalle"
+    :venta="ventaSeleccionada"
+    @close="mostrarDetalle = false"
+  />
 </template>
 
 <style scoped>

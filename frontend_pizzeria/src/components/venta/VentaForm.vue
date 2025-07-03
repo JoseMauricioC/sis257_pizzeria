@@ -371,7 +371,7 @@ async function registrarVenta() {
   border-radius: 15px !important;
   font-size: 1rem !important;
   transition: all 0.3s ease !important;
-  background: linear-gradient(145deg, #fff8f0, #fef5e7) !important;
+  background: linear-gradient(145deg, orange, #fef5e7) !important;
   box-shadow: 0 3px 12px rgba(255, 140, 0, 0.1) !important;
   color: #8b4513 !important;
 }

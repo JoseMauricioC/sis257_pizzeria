@@ -278,6 +278,7 @@ async function handleSave() {
   transition: all 0.3s ease !important;
   background: white !important;
   box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1) !important;
+  color: orangered;
 }
 
 .form-input:focus {
@@ -288,7 +289,7 @@ async function handleSave() {
 }
 
 .form-input::placeholder {
-  color: #ffb366 !important;
+  color: orange !important;
   font-style: italic;
 }
 

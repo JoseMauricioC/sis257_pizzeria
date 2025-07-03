@@ -299,6 +299,7 @@ async function handleSave() {
   transition: all 0.3s ease !important;
   background: white !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+  color: orangered;
 }
 
 :deep(.styled-input:focus) {
@@ -328,6 +329,7 @@ async function handleSave() {
   transition: all 0.3s ease !important;
   background: white !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+  color: orangered;
 }
 
 :deep(.styled-input-number .p-inputnumber-input:focus) {

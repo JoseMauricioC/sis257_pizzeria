@@ -1,0 +1,56 @@
+networks:
+  net-pizzeria:
+    name: net-pizzeria
+    driver: bridge
+
+services:
+  db-pizzeria:
+    image: postgres
+    container_name: db-pizzeria
+    restart: always
+    ports:
+      - "5433:5432"
+    networks:
+      - net-pizzeria
+    environment:
+      POSTGRES_DB: sis257_pizzeria
+      POSTGRES_USER: usr_pizzeria
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  backend-pizzeria:
+    depends_on:
+      - db-pizzeria
+    image: be-pizzeria
+    container_name: api-pizzeria
+    restart: unless-stopped
+    build:
+      context: ./backend_pizzeria_jwt
+    ports:
+      - 3000:3000
+    networks:
+      - net-pizzeria
+    environment:
+      DB_HOST: db-pizzeria
+    volumes:
+      - ./backend_pizzeria_jwt:/usr/src/app
+      - /usr/src/app/node_modules/
+
+  frontend-pizzeria:
+    depends_on:
+        - backend-pizzeria
+    image: fe-pizzeria
+    container_name: app-pizzeria
+    restart: unless-stopped
+    build:
+      context: ./frontend_pizzeria
+      dockerfile: Dockerfile
+    ports:
+      - 85:85
+    networks:
+      - net-pizzeria
+    environment:
+      VITE_BASE_URL_ENDPOINT: backend-pizzeria
+    volumes:
+      - /usr/src/app/node_modules/
