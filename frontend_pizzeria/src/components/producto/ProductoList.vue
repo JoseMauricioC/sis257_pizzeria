@@ -8,7 +8,7 @@ const ENDPOINT = 'productos'
 const productos = ref<Producto[]>([])
 const productoDelete = ref<Producto | null>(null)
 const mostrarConfirmDialog = ref(false)
-const emit = defineEmits(['edit'])
+const emit = defineEmits(['edit', 'nuevo'])
 const busqueda = ref<string>('')
 
 async function obtenerLista() {
@@ -35,6 +35,7 @@ async function eliminar() {
   obtenerLista()
   mostrarConfirmDialog.value = false
 }
+
 
 onMounted(() => {
   obtenerLista()

@@ -9,8 +9,13 @@ import Column from 'primevue/column'
 import VentaForm from '@/components/venta/VentaForm.vue'
 import type { Venta } from '@/models/venta'
 
+import DetalleVentaDialog from '@/components/venta/DetalleVentaDialog.vue'
+
 const ventas = ref<Venta[]>([])
 const mostrarFormulario = ref(false)
+
+const mostrarDetalle = ref(false)
+const ventaSeleccionada = ref<Venta | null>(null)
 
 async function cargarVentas() {
   try {
@@ -35,7 +40,7 @@ onMounted(cargarVentas)
         </h1>
         <p class="subtitulo">Gestiona las ventas de tu pizzería</p>
       </div>
-      
+
       <Button
         label="Nueva Venta"
         icon="pi pi-plus"
@@ -59,28 +64,42 @@ onMounted(cargarVentas)
           <i class="pi pi-list"></i>
           Historial de Ventas
         </h2>
-        <div class="stats-badge">
-          {{ ventas.length }} ventas registradas
-        </div>
+        <div class="stats-badge">{{ ventas.length }} ventas registradas</div>
       </div>
-      
-      <DataTable 
-        :value="ventas" 
+
+      <DataTable
+        :value="ventas"
         class="tabla-ventas"
-        paginator 
+        paginator
         :rows="10"
         :rowsPerPageOptions="[5, 10, 20]"
         stripedRows
         responsiveLayout="scroll"
       >
-        <Column field="id" header="ID" class="columna-id">
+        <Column header="Acciones">
           <template #body="slotProps">
-            <div class="id-badge">
-              #{{ slotProps.data.id }}
-            </div>
+            <Button
+              icon="pi pi-eye"
+              label="Detalle"
+              class="btn-detalle"
+              @click="
+                () => {
+                  ventaSeleccionada = slotProps.data as Venta
+                  mostrarDetalle = true
+                }
+              "
+              severity="info"
+              rounded
+            />
           </template>
         </Column>
-        
+
+        <Column field="id" header="ID" class="columna-id">
+          <template #body="slotProps">
+            <div class="id-badge">#{{ slotProps.data.id }}</div>
+          </template>
+        </Column>
+
         <Column field="fecha" header="Fecha" class="columna-fecha">
           <template #body="slotProps">
             <div class="fecha-container">
@@ -89,15 +108,13 @@ onMounted(cargarVentas)
             </div>
           </template>
         </Column>
-        
+
         <Column field="total" header="Total" class="columna-total">
           <template #body="slotProps">
-            <div class="total-badge">
-              {{ slotProps.data.total }} Bs.
-            </div>
+            <div class="total-badge">{{ slotProps.data.total }} Bs.</div>
           </template>
         </Column>
-        
+
         <Column field="cliente.nombre" header="Cliente" class="columna-cliente">
           <template #body="slotProps">
             <div class="cliente-info">
@@ -106,7 +123,7 @@ onMounted(cargarVentas)
             </div>
           </template>
         </Column>
-        
+
         <Column field="usuario.usuario" header="Vendedor" class="columna-usuario">
           <template #body="slotProps">
             <div class="usuario-badge">
@@ -133,6 +150,12 @@ onMounted(cargarVentas)
       </div>
     </div>
   </div>
+
+  <DetalleVentaDialog
+  :mostrar="mostrarDetalle"
+  :venta="ventaSeleccionada"
+  @close="mostrarDetalle = false"
+/>
 </template>
 
 <style scoped>
@@ -371,17 +394,17 @@ onMounted(cargarVentas)
   .ventas-container {
     padding: 1rem;
   }
-  
+
   .header-section {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
   }
-  
+
   .titulo-principal {
     font-size: 2rem;
   }
-  
+
   .tabla-header {
     flex-direction: column;
     gap: 1rem;
